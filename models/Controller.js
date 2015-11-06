@@ -24,7 +24,7 @@ Controller.prototype.onMessage = function(messageType, controllerId, payload){
 Controller.prototype.handlers = {
     // events such as "virtual" keypress - validate and pipe it to the room
     gameEvent: function (connection, payload) {
-        this.room.messageToViews('gameEvent', connection.id, payload);
+        this.room.messageToControllers('gameEvent', connection.id, payload);
     }
 };
 
