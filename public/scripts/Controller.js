@@ -1,5 +1,5 @@
 var Controller = function (options) {
-    merge(this, Controller.defaults, options);
+    __merge(this, Controller.defaults, options);
 };
 
 (function (Controller) {
@@ -10,12 +10,20 @@ var Controller = function (options) {
     Controller.prototype = {
         init: function(){
             this.messageHub = new MessageHub();
+            this.stateMachine = new StateMachine();
             
-            this.messageHub.on("gesture", function(){
-                
-            });
+            attachHandlers.call(this);
+            defineEdges.call(this);
         }
     };
     
-    __merge(Controller, EventEmitter);
+    function attachHandlers(){
+        this.messageHub.on("gesture", function(){
+                
+        });
+    }
+    
+//    function
+    
+    __merge(Controller.prototype, EventEmitter);
 })(Controller);
