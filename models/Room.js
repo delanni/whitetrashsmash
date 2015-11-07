@@ -23,7 +23,7 @@ Room.prototype.addConnection = function (connection, options) {
     T.tab(connection.id, connection.name, this.controllersList.length, "CONTROLLER", JSON.stringify(options));
 
     controller.onMessage('welcome', connection.id, {
-        id: connection.id,
+       id: connection.id,
         name: connection.name
     });
 };
