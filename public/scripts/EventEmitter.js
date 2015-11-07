@@ -4,13 +4,14 @@ var EventEmitter = {
      * @param {String}   eventName Name of the event, that serves as a key
      * @param {Function} callback  The callback to invoke when the event is triggered. The event will be executed in the context of the host object
      */
-    on: function (eventName, callback) {
+    on: function (eventName, callback, context) {
         if (!this._eventListeners) {
             this._eventListeners = {};
         }
         if (!this._eventListeners[eventName]) {
             this._eventListeners[eventName] = [];
         }
+        if (context) callback.contxt = context;
         this._eventListeners[eventName].push(callback);
     },
     /**
@@ -28,7 +29,7 @@ var EventEmitter = {
             listeners = [];
         }
     },
-    
+
     /**
      * Fires a particular event with the given parameters
      * @param {String} eventName       Event name to fire
@@ -41,12 +42,12 @@ var EventEmitter = {
             var listeners = this._eventListeners[eventName];
             var returnValues = [];
             listeners.forEach(function (listener) {
-                returnValues.push(listener.apply(this, args));
+                returnValues.push(listener.apply(listener.context || this, args));
             }, this);
             return returnValues;
         }
     },
-    
+
     /**
      * Fires a particular event with the given parameters, in asynchronous manner, so it will not block the main caller
      * @param {String} eventName       Event name to fire
@@ -55,8 +56,8 @@ var EventEmitter = {
     triggerAsync: function (eventName) {
         var ctx = this;
         var args = arguments;
-        setTimeout(function(){
+        setTimeout(function () {
             ctx.trigger.apply(ctx, args);
-        },0);
+        }, 0);
     }
 };
