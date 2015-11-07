@@ -9,8 +9,16 @@
         Connection.on("authenticated", function () {
             // Init controller
             controller.init();
+
             // if the page HTML does not derive and update from the controller state, update it manually
-            // initPage();
+            initPage();
+
+            var controlsHost = document.getElementById("controls");
+            var controls = new MockControls(controlsHost, controller.messageHub);
         });
+    };
+
+    function initPage() {
+
     };
 })();
