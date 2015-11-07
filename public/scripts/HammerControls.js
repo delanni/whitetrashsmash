@@ -12,7 +12,10 @@ function HammerControls(el, messageHub) {
                     gestureSource: divElement,
                     gestureType: gesture,
                     gestureArea: divElement.id
-                }); 
+                });
+
+                divElement.textContent = ev.type;
+                setTimeout(function() { divElement.textContent = ""; }, 1000);
             });
 
         });

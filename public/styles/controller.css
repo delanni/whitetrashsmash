@@ -10,6 +10,9 @@
     border: 1px solid red;
     border-radius: 3px;
     margin: 3px;
+    background: silver;
+    text-align: center;
+    font: 30px/300px Helvetica, Arial, sans-serif;
 }
 
 .controlArea button {
