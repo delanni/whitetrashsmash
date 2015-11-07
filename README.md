@@ -5,11 +5,14 @@ Join game room: socket.emit('joinRoom', {roomId: roomId, type: 'viewer|controlle
 Game events: All other game events are emitted on the gameEvents channel in the following format:
 
 Example:
+```javascript
 socket.on('gameEvent', function(data){
             console.log('New game event', data);
           });
+```
 
 Message format:
+```javascript
 {
     type: "welcome",
     sender: "dbeb122b-5b59-445c-9f5b-468e5f1c636c",
@@ -18,6 +21,7 @@ Message format:
     },
     timestamp: "2015-11-07T04:07:11.404Z"
 }
+```
 
 Implemented message types:
 - welcome: welcome message to new players
@@ -25,10 +29,12 @@ Implemented message types:
 - playerLeave: emitted when player left
 
 payload in all three cases: 
+```javascript
 {
     id: connection.id,
     name: connection.name
 }
+```
 
 ## Quick Start
 
