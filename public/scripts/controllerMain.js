@@ -14,7 +14,7 @@
             initPage();
 
             var controlsHost = document.getElementById("controls");
-            var controls = new MockControls(controlsHost, controller.messageHub);
+            var controls = new HammerControls(controlsHost, controller.messageHub);
         });
     };
 

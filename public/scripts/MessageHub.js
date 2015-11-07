@@ -34,6 +34,8 @@ var MessageHub = function () {
             };
             this.logStore.push(logObject);
             console.log(logObject);
+            console.log(wrapped);
+            console.log(wrapped.payload);
         },
 
         _handleMessage: function (messagePayload) {
