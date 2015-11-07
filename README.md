@@ -1,6 +1,9 @@
 ## Server docs
 
-Join game room: socket.emit('joinRoom', {roomId: roomId, type: 'viewer|controller'});
+Join game room: 
+```javascript
+socket.emit('joinRoom', {roomId: roomId, type: 'viewer|controller'});
+```
 
 Game events: All other game events are emitted on the gameEvents channel in the following format:
 
