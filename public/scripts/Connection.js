@@ -1,6 +1,6 @@
 var Connection;
 (function (Connection) {
-    var MESSAGE_KEY = "message";
+    Connection.MESSAGE_KEY = "message";
 
     __merge(Connection, EventEmitter);
 

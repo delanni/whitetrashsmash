@@ -1,6 +1,6 @@
 var MessageHub = function () {
     this.socket = Connection.socket;
-    Connection.on("message", this._handleMessage);
+    Connection.on(Connection.MESSAGE_KEY, this._handleMessage);
 
     this.logStore = [];
 
