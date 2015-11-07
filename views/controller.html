@@ -7,12 +7,11 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/lib/hammer.min.js"></script>
 
-
     <script src="/scripts/Utils.js"></script>
     <script src="/scripts/EventEmitter.js"></script>
     <script src="/scripts/Connection.js"></script>
     <script src="/scripts/StateMachine.js"></script>
-    <script src="/scripts/MockControls.js"></script>
+    <script src="/scripts/HammerControls.js"></script>
     <script src="/scripts/Controller.js"></script>
     <script src="/scripts/controllerMain.js"></script>
     <script src="/scripts/MessageHub.js"></script>
@@ -24,21 +23,9 @@
 <body>
     <div id="controllerWrapper">
         <div id="controls">
-            <div id="top" class="controlArea">
-                <button class="a">top a</button>
-                <button class="b">top b</button>
-                <button class="c">top c</button>
-            </div>
-            <div id="mid" class="controlArea">
-                <button class="a">mid a</button>
-                <button class="b">mid b</button>
-                <button class="c">mid c</button>
-            </div>
-            <div id="bot" class="controlArea">
-                <button class="a">bot a</button>
-                <button class="b">bot b</button>
-                <button class="c">bot c</button>
-            </div>
+            <div id="top" class="controlArea"></div>
+            <div id="mid" class="controlArea"></div>
+            <div id="bot" class="controlArea"></div>
         </div>
     </div>
 </body>
