@@ -109,7 +109,7 @@ Room.prototype._decodeNextStatus = function (status, payload) {
             health: p2.health
         };
         this.transition(next, 'players', payload);
-        if(p1.health <= 0 || p2.health <= 0) {
+        if (p1.health <= 0 || p2.health <= 0) {
             this._finishGame();
         } else {
             this._startRound();
@@ -138,10 +138,33 @@ Room.prototype._onControllerReady = function (status) {
 Room.prototype._getResults = function () {
     var p1 = this.player1;
     var p2 = this.player2;
+    var p1attack = p1.attack;
+    var p2defense = p2.defense;
 
-    if(p1.attack !== p2.defense) {
+    if (p1.attack !== p2.defense) {
         p2.health = p2.health - 1;
     }
+
+    /*
+    if(p1attack.length !== p2defense.length) {
+        p2.health = p2.health - 1;
+        return;
+    }
+
+    for (var i = 0; i < p1attack.length; i++) {
+        var current = p1attack[i];
+        var currentDefense = p2defense[i];
+        if (!this._defenseOk(current, currentDefense)) {
+            p2.health = p2.health - 1;
+            break;
+        }
+    } */
+}
+
+Room.prototype._defenseOk = function (atk, def) {
+    return atk.divElement === def.divElement && 
+            atk.gestureType === def.gestureType && 
+            atk.gestureArea === def.gestureArea;
 }
 
 Room.prototype._startRound = function () {
