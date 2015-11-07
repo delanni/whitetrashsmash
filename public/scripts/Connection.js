@@ -60,4 +60,4 @@ var Connection;
         }
     }
 
-})(Connection || {});
+})(Connection || (Connection = {}));

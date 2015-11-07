@@ -1,5 +1,5 @@
 var Controller = function (options) {
-    merge(this, Controller.defaults, options);
+    __merge(this, Controller.defaults, options);
 };
 
 (function (Controller) {
@@ -17,5 +17,5 @@ var Controller = function (options) {
         }
     };
     
-    __merge(Controller, EventEmitter);
+    __merge(Controller.prototype, EventEmitter);
 })(Controller);
