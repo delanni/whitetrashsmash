@@ -1,15 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <title>Node Knockout 2015</title>
   <head>
-    <script type="text/javascript" src="js/pulse.min.js"></script>
-    <script type="text/javascript" src="js/game.js"></script>
-
-    <link rel='stylesheet' type='text/css' href='styles/main.css'>
+    <title>Node Knockout 2015</title>
+    <link rel='stylesheet' type='text/css' href='styles/main.css' />
   </head>
   <body>
+    <input type="text" id="room" />
+    <button id="join">Join room</button>
+    <br />
+    -- OR --
+    <br />
+    <a href="viewer/" >Create a new room</a>    
+    <br />
+    -- OR --
+    <br />
+    <a href="controller/random" >Join a random room</a>
 
-    <h2><img src="https://pbs.twimg.com/profile_images/623570379437510656/b0gi4XDH_400x400.png" /> Time to get Started!</h2>
-    <div id="gw"></div>
+    <script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
+    <script>
+      $(function() {
+        $( "#join" ).click(function() {
+          document.location = document.location + 'controller/' + $( "#room" ).val();
+        });
+      });
+    </script>
   </body>
 </html>
