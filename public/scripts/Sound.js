@@ -1,6 +1,7 @@
 function Sound(messageHub) {
 
     var gestures = ["tap", "swipeleft", "swiperight"];
+    var areas = ["top", "mid", "bot"];
 
     var events = {
         hit: ["hit1", "hit2", "hit3"]
@@ -10,16 +11,22 @@ function Sound(messageHub) {
 
     var gestureSounds = {};
     gestures.forEach(function(gesture) {
-        var sound = new Audio('/sounds/gestures/' + gesture);
-        gestureSounds[gesture] = sound;
+        areas.forEach(function(area) {
+            var key = gesture + "_" + area;
+            var sound = new Audio('/sounds/gestures/' + key);
+            gestureSounds[key] = sound;
+        });
     });
 
     messageHub.on("gesture", function(data) {
         var type = data.gestureType;
-        if (type in gestureSounds) {
-            gestureSounds[type].play();
+        var area = data.gestureArea;
+        var key = type + "_" + area;
+
+        if (key in gestureSounds) {
+            gestureSounds[key].play();
         } else {
-            console.log("Tried to play sound for " + type + " gesture, but it doesn't exist!");
+            console.log("Tried to play sound for " + key + ", but it doesn't exist!");
         }
     });
 
