@@ -1,6 +1,8 @@
 var T = require('../utils/tracing'),
     Controller = require("./Controller"),
-    utils = require('../utils/utils');
+    utils = require('../utils/utils'),
+    RoomStates = require('./RoomStates');
+
 Array.prototype.remove = require("../utils/ArrayExtensions").remove;
 
 var Room = function (id) {
@@ -8,6 +10,7 @@ var Room = function (id) {
 
     this.controllersList = [];
     this.controllers = {};
+    this.stateMachine = new RoomStates(this);
 
     T.tab(id, "ROOM");
 };
@@ -26,6 +29,10 @@ Room.prototype.addConnection = function (connection, options) {
        id: connection.id,
         name: connection.name
     });
+};
+
+Room.prototype.transition = function (status) {
+    this.stateMachine.transition(status);
 };
 
 Room.prototype.dropConnection = function (connection) {
