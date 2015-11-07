@@ -11,7 +11,7 @@ var EventEmitter = {
         if (!this._eventListeners[eventName]) {
             this._eventListeners[eventName] = [];
         }
-        if (context) callback.contxt = context;
+        if (context) callback.context = context;
         this._eventListeners[eventName].push(callback);
     },
     /**

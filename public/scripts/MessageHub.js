@@ -10,10 +10,10 @@ var MessageHub = function () {
 };
 
 (function (MessageHub) {
-    MessageHub.OUTGOING = 0;
-    MessageHub.INCOMING = 1;
-    MessageHub.INTERNAL = 2;
-    MessageHub.INTERNAL_IMMEDIATE = 3;
+    MessageHub.OUTGOING = "OUTGOING";
+    MessageHub.INCOMING = "INCOMING";
+    MessageHub.INTERNAL = "INTERNAL";
+    MessageHub.INTERNAL_IMMEDIATE = "IMMEDIATE";
 
     MessageHub.prototype = {
         log: function () {
@@ -34,8 +34,6 @@ var MessageHub = function () {
             };
             this.logStore.push(logObject);
             console.log(logObject);
-            console.log(wrapped);
-            console.log(wrapped.payload);
         },
 
         _handleMessage: function (messagePayload) {
@@ -48,7 +46,7 @@ var MessageHub = function () {
 
         sendMessage: function (type, payload) {
             var wrapped = {
-                messageType: type,
+                type: type,
                 payload: payload
             };
             Connection.postMessage(wrapped);
