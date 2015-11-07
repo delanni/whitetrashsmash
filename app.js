@@ -15,10 +15,7 @@ app.engine('html', ejs.renderFile);
 app.set("views", "./views");
 app.use(express.static(__dirname + '/public'));
 
-
 app.use('/controller', require('./server/Controller')(game));
-app.use('/viewer', require('./server/Viewer')(game));
-
 
 var server = app.listen(port, function () {
     var host = server.address().address;

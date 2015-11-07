@@ -4,12 +4,12 @@ var express = require('express'),
 
 function controller(game) {
     router.get('/', function (req, res) {
-        res.redirect("../");
+        createRoom(res);
     });
 
     router.get('/random', function (req, res) {
         var gameId = game.randomRoom();
-        if(!gameId) return res.status(404).end("There are no rooms to join! Go ahead and create one!");
+        if (!gameId) return res.status(404).end("There are no rooms to join! Go ahead and create one!");
         res.redirect('/controller/' + gameId);
     });
 
@@ -22,6 +22,12 @@ function controller(game) {
             res.render("controller.html");
         }
     });
+
+    function createRoom(res, gameId) {
+        var room = game.createRoom(gameId);
+        var gameId = room.id;
+        res.redirect('/controller/' + gameId);
+    }
 
     return router;
 }
