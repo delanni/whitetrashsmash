@@ -45,7 +45,7 @@ var Connection;
         while (Connection.outgoing.length) {
             var msg = Connection.outgoing.shift();
             msg.sentT = Date.now();
-            Connection.socket.emit(MESSAGE_KEY, msg);
+            Connection.socket.emit(Connection.MESSAGE_KEY, msg);
         }
     };
 
@@ -54,7 +54,7 @@ var Connection;
         messagePayload.createdT = Date.now();
         if (Connection.status) {
             messagePayload.sentT = messagePayload.createdT;
-            Connection.status.emit(MESSAGE_KEY, messagePayload);
+            Connection.socket.emit(Connection.MESSAGE_KEY, messagePayload);
         } else {
             Connection.outgoing.push(messagePayload);
         }
