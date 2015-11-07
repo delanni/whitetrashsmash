@@ -1,16 +1,18 @@
-var utils = require('../utils/utils');
+var utils = require('../utils/utils'),
+    ControllerStates = require('./ControllerStates');
 
 var Controller = function (connection, room, options) {
     this.connection = connection;
     this.id = connection.id;
     this.room = room;
+    this.stateMachine = new ControllerStates(this);
 
     // other info: eg. webgl enabled / browser vendor / screen size 
 
     utils.attachHandlers(connection, this);
 };
 
-Controller.prototype.onMessage = function(messageType, controllerId, payload){
+Controller.prototype.onMessage = function (messageType, controllerId, payload) {
     var message = {
         type: messageType,
         sender: controllerId,
@@ -26,6 +28,10 @@ Controller.prototype.handlers = {
     gameEvent: function (connection, payload) {
         this.room.messageToControllers('gameEvent', connection.id, payload);
     }
+};
+
+Controller.prototype.transition = function (status) {
+    this.stateMachine.transition(status);
 };
 
 module.exports = Controller;
