@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Controller</title>
+    <link rel='stylesheet' type='text/css' href='styles/main.css' />
+  </head>
+  <body>
+   <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var roomId = window.location.pathname.split("/").pop();
+      var socket = io('http://localhost:8080');
+      function send(data) { 
+        console.log("Message sent");
+        socket.emit('gameEvent', data);
+      }
+      socket.on('connect', function(){
+        socket.emit('joinRoom', {roomId: roomId, type: 'controller'});
+           socket.on('gameEvent', function(data){
+            console.log('New game event', data);
+          });
+      });
+      socket.on('disconnect', function(){
+        console.log('Disconnected   ');
+      });
+    </script>
+  </body>
+</html>
