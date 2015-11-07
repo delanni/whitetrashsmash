@@ -10,6 +10,10 @@ var Controller = function (options) {
     Controller.prototype = {
         init: function(){
             this.messageHub = new MessageHub();
+            
+            this.messageHub.on("gesture", function(){
+                
+            });
         }
     };
     

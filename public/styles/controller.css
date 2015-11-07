@@ -1,0 +1,18 @@
+#controls {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.controlArea {
+    height: 30%;
+    width: 100%;
+    border: 1px solid red;
+    border-radius: 3px;
+    margin: 3px;
+}
+
+.controlArea button {
+    width: 32%;
+    height: 100%;
+}

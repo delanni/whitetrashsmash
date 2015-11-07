@@ -4,6 +4,7 @@
     <title>Controller</title>
 
     <script src="/socket.io/socket.io.js"></script>
+    <script src="/lib/hammer.min.js"></script>
 
     <script src="/scripts/Utils.js"></script>
     <script src="/scripts/EventEmitter.js"></script>
@@ -14,6 +15,24 @@
 
   </head>
   <body>
-    Use developer tools (press F12) to see the messages from the server.
+    <div id="controllerWrapper">
+        <div id="controls">
+            <div id="top" class="controlArea">
+                <button class="a">top a</button>
+                <button class="b">top b</button>
+                <button class="c">top c</button>
+            </div>
+            <div id="mid" class="controlArea">
+                <button class="a">mid a</button>
+                <button class="b">mid b</button>
+                <button class="c">mid c</button>
+            </div>
+            <div id="bot" class="controlArea">
+                <button class="a">bot a</button>
+                <button class="b">bot b</button>
+                <button class="c">bot c</button>
+            </div>
+        </div>
+    </div>
   </body>
 </html>
