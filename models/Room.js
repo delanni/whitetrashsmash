@@ -35,6 +35,7 @@ Room.prototype.addConnection = function (connection, options) {
     }
 
     if (newEntity) newEntity.onMessage('welcome', connection.id, {
+        id: connection.id,
         name: connection.name
     });
 };
