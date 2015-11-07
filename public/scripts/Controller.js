@@ -4,26 +4,24 @@ var Controller = function (options) {
 
 (function (Controller) {
     Controller.defaults = {
-        
+
     };
-    
+
     Controller.prototype = {
-        init: function(){
+        init: function () {
             this.messageHub = new MessageHub();
             this.stateMachine = new StateMachine();
-            
+
             attachHandlers.call(this);
             defineEdges.call(this);
         }
     };
-    
-    function attachHandlers(){
-        this.messageHub.on("gesture", function(){
-                
+
+    function attachHandlers() {
+        this.messageHub.on("gesture", function () {
+
         });
     }
-    
-//    function
-    
+
     __merge(Controller.prototype, EventEmitter);
 })(Controller);

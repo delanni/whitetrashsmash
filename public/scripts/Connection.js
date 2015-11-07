@@ -21,13 +21,24 @@ var Connection;
         Connection.status = Connection.OFFLINE;
     });
 
+    socket.on("gameEvent", function(data) {
+        if (data.type === "welcome") {
+            console.log("Welcome!");
+            Connection.status = Connection.AUTHENTICATED;
+            Connection.trigger("authenticated", {});
+        }
+        console.log("gameEvent: ", data);
+    });
+
     var authenticate = function () {
         // Do handshake, pass messages around, shit like this
         // Server should know: Kind of client, name
         // Client should know: Id?, room info, ?
 
-        Connection.status = Connection.AUTHENTICATED;
-        Connection.trigger("authenticated", {});
+        console.log("Trying to join");
+
+        var roomId = window.location.pathname.split("/").pop();
+        Connection.socket.emit('joinRoom', {roomId: roomId});
     };
 
     var sendOutgoing = function () {
@@ -49,4 +60,4 @@ var Connection;
         }
     }
 
-})(Connection || {});
+})(Connection || (Connection = {}));

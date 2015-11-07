@@ -1,5 +1,5 @@
 (function () {
-    window.addEventListener("ready", runInit);
+    window.addEventListener("load", runInit);
 
     function runInit() {
         // Load resources, instantiate controller modell, subscribe its further init to the connection success
