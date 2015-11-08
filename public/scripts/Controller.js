@@ -207,11 +207,17 @@ var Controller = function(options) {
                 status: payload.newState
             });
         });
+        
+        
 
         this.stateMachine.on("stateChanged", function(payload) {
             this.messageHub.postMessage("statusChange", {
                 status: payload.newState
             });
+            
+            if (payload.newState == StateMachine.STATE.ATTACKING || payload.newState == StateMachine.STATE.DEFENDING){
+                this.messageHub.postMessage("newTurn");
+            }
         }, this);
     }
 
