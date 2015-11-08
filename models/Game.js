@@ -55,23 +55,26 @@ Game.prototype.dropConnection = function (connection) {
 Game.prototype.handlers = {
     joinRoom: function (connection, payload) {
         var roomId = payload.roomId;
+        var viewr = payload.isViewer;
         var room = this.rooms[roomId];
         if (room) {
-            if (room.isOpen) {
+            if (room.isOpen || viewr) {
                 T.tab(connection.id, connection.name, roomId, "ROOMJOIN");
                 room.addConnection(connection, payload);
                 connection.on("disconnect", function () {
                     room.dropConnection(connection);
                 });
             } else {
-                connection.emit("error", {
-                    message: "The room is full"
-                });
+                //                connection.emit("error", {
+                //                    message: "The room is full"
+                //                });
+                console.log("Error, room full");
             }
         } else {
-            connection.emit("error", {
-                message: "The requested room does not exist"
-            });
+            //            connection.emit("error", {
+            //                message: "The requested room does not exist"
+            //            });
+            console.log("Error, no such room");
         }
     }
 };

@@ -30,10 +30,11 @@ Room.prototype.addConnection = function (connection, options) {
     this.controllersList.push(controller);
     this.broadcastInRoom("playerJoin", connection.id, {
         name: connection.name,
-        id: connection.id
+        id: connection.id,
+        isViewer: controller.isViewer
     });
 
-    if (this.controllersList.length >= 2) {
+    if (this.controllersList.filter(function(e){return !e.isViewer}).length >= 2) {
         this.isOpen = false;
     }
 

@@ -27,3 +27,31 @@ var __merge = function (where, what) {
     }
     return where;
 };
+
+(function(){
+    var e = PIXI;
+    e.GrayFilter = function() {
+        e.AbstractFilter.call(this),
+        this.passes = [this],
+        this.uniforms = {
+            gray: {
+                type: "1f",
+                value: 1
+            }
+        },
+        this.fragmentSrc = ["precision mediump float;", "varying vec2 vTextureCoord;", "varying vec4 vColor;", "uniform sampler2D uSampler;", "uniform float gray;", "void main(void) {", "   gl_FragColor = texture2D(uSampler, vTextureCoord);", "   gl_FragColor.rgb = mix(gl_FragColor.rgb, vec3(0.2126*gl_FragColor.r + 0.7152*gl_FragColor.g + 0.0722*gl_FragColor.b), gray);", "}"]
+    }
+    ,
+    e.GrayFilter.prototype = Object.create(e.AbstractFilter.prototype),
+    e.GrayFilter.prototype.constructor = e.GrayFilter,
+    Object.defineProperty(e.GrayFilter.prototype, "gray", {
+        get: function() {
+            return this.uniforms.gray.value
+        },
+        set: function(a) {
+            this.uniforms.gray.value = a
+        }
+    });
+    window.grayFilter = new PIXI.GrayFilter();
+    window.grayFilter.gray = 0.8;
+})();

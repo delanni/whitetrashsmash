@@ -12,6 +12,7 @@ var Controller = function (connection, room, options) {
     this.attack = {};
     this.defense = {};
 
+    this.isViewer = options.isViewer;
     // other info: eg. webgl enabled / browser vendor / screen size 
 
     utils.attachHandlers(connection, this);

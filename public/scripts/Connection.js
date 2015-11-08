@@ -41,7 +41,7 @@ var Connection;
         console.log("Trying to join");
 
         var roomId = window.location.pathname.split("/").pop();
-        Connection.socket.emit('joinRoom', {roomId: roomId});
+        Connection.socket.emit('joinRoom', {roomId: roomId, isViewer: window.location.pathname.indexOf("viewer")>=0});
     };
 
     var sendOutgoing = function () {
