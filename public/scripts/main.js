@@ -50,10 +50,16 @@
 
         $( "#join" ).click(function() {
           $(".dialog").css('z-index', 10);
+          $( "#room" ).focus();
           dialogOpened = true;
         });
 
         $( "#join2" ).click(function() {
           document.location = 'controller/' + $( "#room" ).val();
+        });
+
+        $( "#escape" ).click(function() {
+            $(".dialog").css('z-index', -1);
+            dialogOpened = false;
         });
       });
