@@ -16,6 +16,7 @@
 
             var controlsHost = document.getElementById("controls");
             var controls = new HammerControls(controlsHost, controller.messageHub);
+            var sound = new Sound(controller.messageHub);
         });
     };
 

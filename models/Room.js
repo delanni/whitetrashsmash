@@ -79,7 +79,7 @@ Room.prototype.dropConnection = function (connection) {
                 reason: "Forfeit"
             })
         }
-    } else {
+    } else if (this.stateMachine.status == RoomStates.IDLE) {
         this.isOpen = this.controllersList.length <2;
     }
 };
