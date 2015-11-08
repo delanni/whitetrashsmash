@@ -1,0 +1,48 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <title>Node Knockout 2015</title>
+        <meta name="description" content="">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="cleartype" content="on">
+        <link rel="stylesheet" href="styles/mobile.css">
+    </head>
+    <body>
+        <div class="content">
+          <div class="header">
+            Barfight<br />
+            <iframe src="http://nodeknockout.com/iframe/destructive-internet" frameborder="0" scrolling="no" allowtransparency="true" width="115" height="25"></iframe>
+            <br />
+            <a href="https://www.facebook.com/sphynxag/">© Private dicks 2015</a>
+          </div>
+          <div class="body">
+            <div>
+              <input type="text" class="form" id="room" />
+            </div>
+            <div>
+              <a href="#" id="join">Join room</a>
+            </div>
+            <div>
+              -- OR --
+            </div>
+            <div>
+              <a href="controller/random">Join random</a>
+            </div>
+          </div>
+        </div>
+        <script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
+        <script>
+          $( "#join" ).click(function() {
+            var room = $( "#room" ).val();
+            if(room && room.length > 0) {
+              document.location = 'controller/' + $( "#room" ).val();
+            } else {
+              alert("Please fill in the room number!");
+            }
+          });
+        </script>
+    </body>
+</html>

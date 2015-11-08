@@ -19,6 +19,13 @@
         width: 0px; 
       }
 
+      iframe {
+        position: relative;
+        top: 160px;
+        left: 5px;
+        z-index: 1000;
+      }
+
       .content {
         background: url('../images/background.png');
         width: 800px;
@@ -51,12 +58,17 @@
       .content .footer {
         font-family: header;
         position: relative;
-        top: 140px;
+        top: 115px;
         width: 790px;
       }
 
        .content .footer h3 {
         text-align: right;
+        color: red;
+      }
+
+      .content .footer h3 a {
+        text-decoration: none;
         color: red;
       }
 
@@ -97,6 +109,12 @@
       .dialog a:hover {
         color: #ff0000;
         text-decoration: none;
+      }
+
+      #escape {
+        position: relative;
+        bottom: 20px;
+        left: 45px;
       }
 
 @font-face {

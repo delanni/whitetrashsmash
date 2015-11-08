@@ -1,0 +1,62 @@
+   @font-face {
+      font-family: menu;
+      src: url('../fonts/Fipps-Regular.otf');
+  }
+
+  @font-face {
+      font-family: header;
+      src: url('../fonts/Gamegirl.ttf');
+  }
+
+
+  body {
+    padding: 0px;
+    margin: 0px;
+    background: #111111;
+  }
+
+  .content {
+
+  }
+
+  .content .header {
+    background: rgb(57, 47, 45) none repeat scroll 0% 0%;
+    font-family: header;
+    color: red;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 38px;
+    padding-top: 10px;
+    height: 200px;
+  }
+
+.content .body {
+    font-family: menu;
+    color: red;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 10px;
+  }
+
+  .content .body a {
+    color: #aaaa00;
+    text-decoration: none; 
+  }
+
+.content .header a {
+    color: red;
+    text-decoration: none;
+    font-size: 14px;
+    position: relative;
+    top: 50px;
+  }
+
+  .form {
+    background: black;
+    border: 0px;
+    font-family: header;
+    color: red;
+    border: solid 2px yellow;
+    width: 200px;
+    height: 30px;
+  }
