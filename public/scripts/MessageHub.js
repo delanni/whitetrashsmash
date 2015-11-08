@@ -61,14 +61,15 @@ var MessageHub = function () {
         postMessage: function (type, payload) {
             // TODO: If we don't bind us to the fact, that the system is a local/internal subsystem,
             // then these messages may be wrapped up and proxied forward to a remote messagehub
-            this.triggerAsync(type, payload);
             this.log(MessageHub.INTERNAL, type, payload);
+            this.triggerAsync(type, payload);
         },
 
         // Right now this is not functional. Immediate posting should handle return values
         postImmediateMessage: function (type, payload) {
-            this.trigger(type, payload);
             this.log(MessageHub.INTERNAL_IMMEDIATE, type, payload);
+            var retVal = this.trigger(type, payload);
+            return retVal;
         }
     };
 

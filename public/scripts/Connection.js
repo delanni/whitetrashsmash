@@ -13,12 +13,14 @@ var Connection;
 
     socket.on("connect", function () {
         Connection.status = Connection.ONLINE;
+        Connection.trigger("online");
         authenticate();
         sendOutgoing();
     });
 
     socket.on("disconnect", function () {
         Connection.status = Connection.OFFLINE;
+        Connection.trigger("offline");
     });
     
     socket.on("welcome", function(data) {
@@ -26,9 +28,9 @@ var Connection;
         Connection.status = Connection.AUTHENTICATED;
         Connection.trigger("authenticated", data);
     });
-
-    socket.on("gameEvent", function(data) {
-        console.log("gameEvent: ", data);
+    
+    socket.on("playerJoin", function(data){
+        Connection.trigger("playerJoin", data);
     });
 
     var authenticate = function () {
