@@ -1,3 +1,4 @@
+
       @font-face {
           font-family: menu;
           src: url('../fonts/Fipps-Regular.otf');
@@ -97,3 +98,8 @@
         color: #ff0000;
         text-decoration: none;
       }
+
+@font-face {
+    font-family: arcade;
+    src: url(/fonts/arcade/PressStart2P.ttf);
+}

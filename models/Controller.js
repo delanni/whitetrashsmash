@@ -8,7 +8,7 @@ var Controller = function (connection, room, options) {
     this.room = room;
     this.stateMachine = new ControllerStateMachine(this);
     this.gameRound = 0;
-    this.health = 1;
+    this.health = 3;
     this.attack = {};
     this.defense = {};
 
