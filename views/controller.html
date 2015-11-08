@@ -3,6 +3,7 @@
 
 <head>
     <title>Controller</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/lib/hammer.min.js"></script>
@@ -12,19 +13,31 @@
     <script src="/scripts/Connection.js"></script>
     <script src="/scripts/StateMachine.js"></script>
     <script src="/scripts/HammerControls.js"></script>
+    <script src="/scripts/PageModel.js"></script>
     <script src="/scripts/Controller.js"></script>
     <script src="/scripts/controllerMain.js"></script>
     <script src="/scripts/MessageHub.js"></script>
     <script src="/scripts/MoveSessions.js"></script>
 
-
     <link rel="stylesheet" type="text/css" href="/styles/controller.css" />
+        <link rel="stylesheet" type="text/css" href="/styles/main.css" />
 
 </head>
 
 <body>
     <div id="controllerWrapper">
         <div id="controls">
+            <div id="statusBar">
+                <div id="connectionStatus">
+                    <span id="connectionIcon" class="icon"></span>
+                </div>
+                <div id="message"></div>
+                <div id="lives">
+                    <span class="icon life"></span>
+                    <span class="icon life"></span>
+                    <span class="icon life"></span>
+                </div>
+            </div>
             <div id="top" class="controlArea"></div>
             <div id="mid" class="controlArea"></div>
             <div id="bot" class="controlArea"></div>
