@@ -6,8 +6,7 @@ function AttackSession(options) {
     AttackSession.defaults = {
         acceptsMoves: false,
         numberOfAttacks: 3,
-        timeout: 20000,
-
+        timeout: 20000
     };
 
     AttackSession.prototype = {
@@ -19,6 +18,9 @@ function AttackSession(options) {
             setTimeout(function () {
                 attackSession.finish();
             }, this.timeout);
+            this.messageHub.postMessage("messageBar", {
+                text: "Your turn! (" + this.attacksRemaining + " attacks left)"
+            });
         },
         addAttack: function (attackGesture) {
             if (!this.acceptsMoves) return;
@@ -26,6 +28,10 @@ function AttackSession(options) {
             this.attacksRemaining -= 1;
             if (this.attacksRemaining == 0) {
                 this.finish();
+            } else {
+                this.messageHub.postMessage("messageBar", {
+                    text: "Your turn! (" + this.attacksRemaining + " attacks left)"
+                });
             }
         },
         finish: function () {
@@ -56,17 +62,28 @@ function DefendSession(options) {
             setTimeout(function () {
                 defendSession.finish();
             }, this.timeout);
+            this.messageHub.postMessage("messageBar", {
+                text: "Defend! (" + this.attacksRemaining + " to defend)"
+            });
         },
         tryDefend: function (attackGesture) {
             this.attackList.push(attackGesture);
             var toDefend = this.defend.shift();
             if (toDefend.gestureArea == attackGesture.gestureArea && toDefend.gestureType == attackGesture.gestureType) {
                 this.attacksRemaining = this.defend.length;
-                if (this.attacksRemaining.length == 0) {
-                    // Signal fail somehow
+                this.messageHub.postMessage("messageBar", {
+                    text: "Defend! (" + this.attacksRemaining + " to defend)"
+                });
+                if (this.attacksRemaining == 0) {
+                    this.messageHub.postMessage("messageBar", {
+                        text: "Good job!"
+                    });
                     this.finish();
                 }
             } else {
+                this.messageHub.postMessage("messageBar", {
+                    text: "Dang!"
+                });
                 // Signal fail somehow
                 this.finish();
             }

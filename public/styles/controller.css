@@ -1,21 +1,111 @@
-#controls {
+body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+#controllerWrapper {
     position: absolute;
     height: 100%;
     width: 100%;
 }
 
+#controls {
+    margin: auto;
+    height: 100%;
+    width: 95%;
+}
+
 .controlArea {
-    height: 30%;
+    height: 25%;
     width: 100%;
-    border: 1px solid red;
-    border-radius: 3px;
-    margin: 3px;
-    background: silver;
+    margin: 7px 0;
     text-align: center;
+    background: #c0c0c0;
     font: 30px/300px Helvetica, Arial, sans-serif;
 }
 
 .controlArea button {
     width: 32%;
     height: 100%;
+}
+
+#top, #mid, #bot{
+    background-color: dimgrey;
+    transition: 0.5s ease-in-out;
+}
+
+.colored#top {
+    background-color: #1700CC;
+}
+
+.colored#mid {
+    background-color: #FF6600;
+}
+
+.colored#bot {
+    background-color: #17FF01;
+}
+
+#statusBar {
+    margin-top: 5px;
+    height: 32px;
+    background-color: blueviolet;
+    width: 100%;
+    display: table;
+    padding: 5px 0;
+}
+
+#statusBar>* {
+    display: table-cell;
+    text-align: center;
+}
+
+#connectionStatus {
+    width: 50px;
+}
+
+#lives {
+    width: 112px;
+}
+
+.icon {
+    border: 1px solid beige;
+    image-rendering: pixelated;
+    border-radius: 14px;
+    transition: 0.3s ease-in;
+}
+
+#connectionStatus .icon {
+    background: url(../img/icons.png) -33px 0;
+    width: 32px;
+    height: 32px;
+    background-size: cover;
+    display: inline-block;
+}
+
+#lives .icon {
+    background: url(../img/icons.png) 0 0;
+    width: 32px;
+    height: 32px;
+    background-size: cover;
+    display: inline-block;
+}
+
+.icon.bad {
+    background-color: salmon !important;
+}
+
+.icon.good {
+    background-color: lightgreen !important;
+}
+
+.icon.discolored {
+    -webkit-filter: grayscale(1);
+    filter:grayscale(1);
+}
+
+#message {
+    font: x-large arcade;
+    color: bisque;
 }

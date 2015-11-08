@@ -4,6 +4,7 @@ function HammerControls(el, messageHub) {
     var bottom = el.children[2];
 
     [].slice.call(el.children).forEach(function (divElement) {
+        if (divElement.id == "statusBar") return;
         var hammer = new Hammer(divElement);
         
         ["tap", "swipeleft", "swiperight"].forEach(function(gesture) {

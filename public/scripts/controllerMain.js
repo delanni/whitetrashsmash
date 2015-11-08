@@ -11,7 +11,8 @@
             controller.init(data);
 
             // if the page HTML does not derive and update from the controller state, update it manually
-            initPage();
+            var controls = document.getElementById("controls");
+            var pageModel = new PageModel(controller.messageHub);
 
             var controlsHost = document.getElementById("controls");
             var controls = new HammerControls(controlsHost, controller.messageHub);

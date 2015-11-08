@@ -13,12 +13,14 @@ var Connection;
 
     socket.on("connect", function () {
         Connection.status = Connection.ONLINE;
+        Connection.trigger("online");
         authenticate();
         sendOutgoing();
     });
 
     socket.on("disconnect", function () {
         Connection.status = Connection.OFFLINE;
+        Connection.trigger("offline");
     });
     
     socket.on("welcome", function(data) {
