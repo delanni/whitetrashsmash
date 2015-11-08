@@ -1,3 +1,104 @@
+
+      @font-face {
+          font-family: menu;
+          src: url('../fonts/Fipps-Regular.otf');
+      }
+
+      @font-face {
+          font-family: header;
+          src: url('../fonts/Gamegirl.ttf');
+      }
+
+      body {
+          background: #000000
+      } 
+
+      audio {
+        visibility: hidden;
+        height: 0px;
+        width: 0px; 
+      }
+
+      .content {
+        background: url('../images/background.png');
+        width: 800px;
+        height: 600px;
+        margin:0 auto;
+        border: solid 4px yellow;
+      }
+
+      .content .menu .menu-item a {
+        color: #ffff00;
+        text-decoration: none;
+      }
+
+      .content .menu .menu-item .selected {
+        color: #ff0000;
+      }
+
+      .content .menu {
+        margin:0 auto;
+        width: 300px;
+        text-align: center;
+        padding-top: 20px;
+        font-family: menu;
+      }
+
+      .content .header {
+        font-family: header;
+      }
+
+      .content .footer {
+        font-family: header;
+        position: relative;
+        top: 140px;
+        width: 790px;
+      }
+
+       .content .footer h3 {
+        text-align: right;
+        color: red;
+      }
+
+      .content .header h1 {
+        text-align: center;
+        color: red;
+        font-size: 48px;
+        padding-top: 0px
+      }
+
+      .dialog {
+        font-family: menu;
+        top: 170px;
+        left: 240px;
+        height: 100px;
+        position: relative;
+        width: 300px;
+        background: rgb(57, 47, 45) none repeat scroll 0% 0%;
+        padding: 10px;
+        color: red;
+        border: 2px solid rgb(255, 255, 0);
+      }
+
+      .dialog .form {
+        background: black;
+        border: 0px;
+        font-family: header;
+        color: red;
+        width: 150px;
+        height: 30px;
+      }
+
+      .dialog a {
+        color: #ffff00;
+        text-decoration: none;
+      }
+
+      .dialog a:hover {
+        color: #ff0000;
+        text-decoration: none;
+      }
+
 @font-face {
     font-family: arcade;
     src: url(/fonts/arcade/PressStart2P.ttf);
