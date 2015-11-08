@@ -1,0 +1,9 @@
+module.exports = {
+    IDLE: "IDLE",
+    READY: "READY",
+    WAITING: "WAITING",
+    STARTING: "STARTING",
+    ATTACKING: "ATTACKING",
+    DEFENDING: "DEFENDING",
+    RESULTS: "RESULTS"
+};

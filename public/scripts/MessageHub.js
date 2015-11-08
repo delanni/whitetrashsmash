@@ -1,6 +1,6 @@
 var MessageHub = function () {
     this.socket = Connection.socket;
-    Connection.on(Connection.MESSAGE_KEY, this._handleMessage);
+    Connection.socket.on(Connection.MESSAGE_KEY, this._handleMessage.bind(this));
 
     this.logStore = [];
 
@@ -10,10 +10,10 @@ var MessageHub = function () {
 };
 
 (function (MessageHub) {
-    MessageHub.OUTGOING = 0;
-    MessageHub.INCOMING = 1;
-    MessageHub.INTERNAL = 2;
-    MessageHub.INTERNAL_IMMEDIATE = 3;
+    MessageHub.OUTGOING = "OUTGOING";
+    MessageHub.INCOMING = "INCOMING";
+    MessageHub.INTERNAL = "INTERNAL";
+    MessageHub.INTERNAL_IMMEDIATE = "IMMEDIATE";
 
     MessageHub.prototype = {
         log: function () {
@@ -33,14 +33,12 @@ var MessageHub = function () {
                 message: wrapped
             };
             this.logStore.push(logObject);
-            console.log(logObject);
-            console.log(wrapped);
-            console.log(wrapped.payload);
+            console.log("<MH>",logObject, wrapped);
         },
 
         _handleMessage: function (messagePayload) {
             // check validity somehow if necessary
-            var messageType = messagePayload.messageType;
+            var messageType = messagePayload.type;
             var payload = messagePayload.payload;
             this.trigger(messageType, payload);
             this.log(MessageHub.INCOMING, messagePayload);
@@ -48,7 +46,7 @@ var MessageHub = function () {
 
         sendMessage: function (type, payload) {
             var wrapped = {
-                messageType: type,
+                type: type,
                 payload: payload
             };
             Connection.postMessage(wrapped);

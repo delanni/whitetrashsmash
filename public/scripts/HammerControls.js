@@ -9,7 +9,6 @@ function HammerControls(el, messageHub) {
         ["tap", "swipeleft", "swiperight"].forEach(function(gesture) {
             hammer.on(gesture, function(ev) {
                 messageHub.postMessage("gesture", {
-                    gestureSource: divElement,
                     gestureType: gesture,
                     gestureArea: divElement.id
                 });
