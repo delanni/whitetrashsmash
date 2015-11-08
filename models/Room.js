@@ -65,12 +65,13 @@ Room.prototype.dropConnection = function (connection) {
     var c = this.controllersList.remove(connectionDetecionPredicate);
     if (c) {
         this.broadcastInRoom("playerLeave", connection.id, {
-            id: connection.id
+            id: connection.id,
+            name: connection.name
         });
     }
     this.controllersList.remove(connectionDetecionPredicate);
     this.controllers[connection.id] = null;
-    if (this.stateMachine.status != RoomStates.IDLE || this.stateMachine.status != RoomStates.FINISH) {
+    if (this.stateMachine.status != RoomStates.IDLE && this.stateMachine.status != RoomStates.FINISH) {
         var survivor = this.controllersList[0];
         if (survivor) {
             this._finishGame({
@@ -78,6 +79,8 @@ Room.prototype.dropConnection = function (connection) {
                 reason: "Forfeit"
             })
         }
+    } else {
+        this.isOpen = this.controllersList.length <2;
     }
 };
 

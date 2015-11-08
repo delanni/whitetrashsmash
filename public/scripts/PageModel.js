@@ -95,5 +95,6 @@ var PageModel = function (messageHub) {
         return document.querySelectorAll(".colored").length;
     });
 
+
     this.init();
 };

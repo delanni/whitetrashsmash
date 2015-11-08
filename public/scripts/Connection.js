@@ -28,9 +28,9 @@ var Connection;
         Connection.status = Connection.AUTHENTICATED;
         Connection.trigger("authenticated", data);
     });
-
-    socket.on("gameEvent", function(data) {
-        console.log("gameEvent: ", data);
+    
+    socket.on("playerJoin", function(data){
+        Connection.trigger("playerJoin", data);
     });
 
     var authenticate = function () {

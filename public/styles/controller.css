@@ -66,7 +66,7 @@ body {
 }
 
 #lives {
-    width: 112px;
+    width: 90px;
 }
 
 .icon {
@@ -86,8 +86,8 @@ body {
 
 #lives .icon {
     background: url(../img/icons.png) 0 0;
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     background-size: cover;
     display: inline-block;
 }
@@ -106,6 +106,7 @@ body {
 }
 
 #message {
-    font: x-large arcade;
+    vertical-align: middle;
+    font: small arcade;
     color: bisque;
 }
