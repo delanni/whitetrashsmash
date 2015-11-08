@@ -1,6 +1,6 @@
 var MessageHub = function () {
     this.socket = Connection.socket;
-    Connection.on(Connection.MESSAGE_KEY, this._handleMessage);
+    Connection.socket.on(Connection.MESSAGE_KEY, this._handleMessage.bind(this));
 
     this.logStore = [];
 
@@ -33,12 +33,12 @@ var MessageHub = function () {
                 message: wrapped
             };
             this.logStore.push(logObject);
-            console.log(logObject);
+            console.log("<MH>",logObject, wrapped);
         },
 
         _handleMessage: function (messagePayload) {
             // check validity somehow if necessary
-            var messageType = messagePayload.messageType;
+            var messageType = messagePayload.type;
             var payload = messagePayload.payload;
             this.trigger(messageType, payload);
             this.log(MessageHub.INCOMING, messagePayload);

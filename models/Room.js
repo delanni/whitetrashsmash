@@ -7,9 +7,10 @@ var T = require('../utils/tracing'),
 
 Array.prototype.remove = require("../utils/ArrayExtensions").remove;
 
-var Room = function (id) {
+var Room = function(id) {
     this.id = id;
-
+    this.isRandom = false;
+    this.isOpen = true;
     this.controllersList = [];
     this.controllers = {};
     this.stateMachine = new RoomStateMachine(this);
@@ -17,42 +18,53 @@ var Room = function (id) {
     T.tab(id, "ROOM");
 };
 
-Room.prototype.addConnection = function (connection, options) {
+Room.prototype.addConnection = function(connection, options) {
     var controller = new Controller(connection, this, options);
-    this.controllers[controller.id] = controller;
-    this.controllersList.push(controller);
-    this.messageToControllers("playerJoin", connection.id, {
-        name: connection.name,
-        id: connection.id
-    });
-    T.tab(connection.id, connection.name, this.controllersList.length, "CONTROLLER", JSON.stringify(options));
-
-    controller.onMessage('welcome', connection.id, {
+    controller.sendMessage('welcome', connection.id, {
         id: connection.id,
         name: connection.name,
         health: controller.health
     });
+
+    this.controllers[controller.id] = controller;
+    this.controllersList.push(controller);
+    this.broadcastInRoom("playerJoin", connection.id, {
+        name: connection.name,
+        id: connection.id
+    });
+    
+    if (this.controllersList.length >= 2){
+        this.isOpen = false;
+    }
+
+    T.tab(connection.id, connection.name, this.controllersList.length, "CONTROLLER", JSON.stringify(options));
 };
 
-Room.prototype.transition = function (status, key, payload) {
-    var id = this._decodePlayerIdForStatus(status);
+Room.prototype.transition = function(status, key, payload) {
+    var targetId = this._decodePlayerIdForStatus(status);
     var message = {
-        type: 'serverStatusChange',
-        status: status,
-        id: id
+        type: "serverStatusChange",
+        payload: {
+            status: status
+        }
     };
-    if (key) message[key] = payload;
+    if (key) {
+        message.payload[key] = payload;
+    }
+    if (targetId){
+        message.payload["id"] = targetId;
+    }
     this.stateMachine.transition(status);
-    this.messageToControllers('gameEvent', this.id, message);
+    this.broadcastInRoom('gameEvent', this.id, message);
 };
 
-Room.prototype.dropConnection = function (connection) {
-    var connectionDetecionPredicate = function (e) {
+Room.prototype.dropConnection = function(connection) {
+    var connectionDetecionPredicate = function(e) {
         return e.id == connection.id
     };
     var c = this.controllersList.remove(connectionDetecionPredicate);
     if (c) {
-        this.messageToControllers("playerLeave", connection.id, {
+        this.broadcastInRoom("playerLeave", connection.id, {
             id: connection.id
         });
     }
@@ -60,42 +72,31 @@ Room.prototype.dropConnection = function (connection) {
     this.controllers[connection.id] = null;
 };
 
-Room.prototype.messageToControllers = function (messageType, controllerId, payload) {
-    var type = payload.type;
-    var status = payload.status;
-    var self = this;
-    if (type === 'statusChange' && status) {
-        switch (status) {
-        case ControllerStates.READY:
-            self._onControllerReady();
-            break;
-        }
-    } else if (type === 'fin') {
-        this._decodeNextStatus(self.stateMachine.status, payload);
-    }
-    this.controllersList.forEach(function (controller) {
-        controller.onMessage(messageType, controllerId, payload);
+Room.prototype.broadcastInRoom = function(messageType, controllerId, payload) {
+    this.controllersList.forEach(function(controller) {
+        controller.sendMessage(messageType, controllerId, payload);
     });
 };
 
-Room.prototype._decodePlayerIdForStatus = function (status) {
+Room.prototype._decodePlayerIdForStatus = function(status) {
     var id;
     var p1 = this.player1;
     var p2 = this.player2;
     if (status === RoomStates.P1ATK) id = p1.id;
     else if (status === RoomStates.P2DEF) id = p2.id;
     return id;
-}
+};
 
-Room.prototype._decodeNextStatus = function (status, payload) {
+Room.prototype._decodeNextStatus = function(payload) {
     var next;
     var p1 = this.player1;
     var p2 = this.player2;
-    if (status === RoomStates.P1ATK) {
+    if (this.stateMachine.status === RoomStates.P1ATK) {
         next = RoomStates.P2DEF;
         p1.attack = payload.attackList;
         this.transition(next, 'attackList', payload.attackList);
-    } else if (status === RoomStates.P2DEF) {
+    }
+    else if (this.stateMachine.status === RoomStates.P2DEF) {
         next = RoomStates.RESULTS;
         p2.defense = payload.attackList;
         this._getResults();
@@ -111,14 +112,15 @@ Room.prototype._decodeNextStatus = function (status, payload) {
         this.transition(next, 'players', payload);
         if (p1.health <= 0 || p2.health <= 0) {
             this._finishGame();
-        } else {
+        }
+        else {
             this._startRound();
         }
     }
     return next;
-}
+};
 
-Room.prototype._onControllerReady = function (status) {
+Room.prototype._onControllerReady = function() {
     var p1 = this.controllersList[0];
     var p2 = this.controllersList[1];
     var self = this;
@@ -133,9 +135,9 @@ Room.prototype._onControllerReady = function (status) {
         return this.transition(RoomStates.READY);
     }
     console.log('Only 1 player ready');
-}
+};
 
-Room.prototype._getResults = function () {
+Room.prototype._getResults = function() {
     var p1 = this.player1;
     var p2 = this.player2;
     var p1attack = p1.attack;
@@ -159,35 +161,34 @@ Room.prototype._getResults = function () {
             break;
         }
     } */
-}
+};
 
-Room.prototype._defenseOk = function (atk, def) {
-    return atk.divElement === def.divElement && 
-            atk.gestureType === def.gestureType && 
-            atk.gestureArea === def.gestureArea;
-}
+Room.prototype._defenseOk = function(atk, def) {
+    return atk.gestureType === def.gestureType &&
+        atk.gestureArea === def.gestureArea;
+};
 
-Room.prototype._startRound = function () {
+Room.prototype._startRound = function() {
     var self = this;
-    setTimeout(function () {
+    setTimeout(function() {
         self._swap();
-        self.transition(RoomStates.P1ATK);
+        self.transition(RoomStates.P1ATK, "id", self.player1.id);
     }, 3000);
-}
+};
 
-Room.prototype._finishGame = function () {
+Room.prototype._finishGame = function() {
     var self = this;
-    setTimeout(function () {
+    setTimeout(function() {
         self.transition(RoomStates.FINISH);
     }, 3000);
-}
+};
 
-Room.prototype._swap = function () {
+Room.prototype._swap = function() {
     var tmp = this.player1;
     this.player1 = this.player2;
     this.player1.newRound();
     this.player2 = tmp;
     this.player2.newRound();
-}
+};
 
 module.exports = Room;

@@ -1,6 +1,6 @@
 var Connection;
 (function (Connection) {
-    Connection.MESSAGE_KEY = "message";
+    Connection.MESSAGE_KEY = "gameEvent";
 
     __merge(Connection, EventEmitter);
 
@@ -20,13 +20,14 @@ var Connection;
     socket.on("disconnect", function () {
         Connection.status = Connection.OFFLINE;
     });
+    
+    socket.on("welcome", function(data) {
+        console.log("Welcome!");
+        Connection.status = Connection.AUTHENTICATED;
+        Connection.trigger("authenticated", data);
+    });
 
     socket.on("gameEvent", function(data) {
-        if (data.type === "welcome") {
-            console.log("Welcome!");
-            Connection.status = Connection.AUTHENTICATED;
-            Connection.trigger("authenticated", {});
-        }
         console.log("gameEvent: ", data);
     });
 
@@ -45,7 +46,7 @@ var Connection;
         while (Connection.outgoing.length) {
             var msg = Connection.outgoing.shift();
             msg.sentT = Date.now();
-            Connection.socket.emit(MESSAGE_KEY, msg);
+            Connection.socket.emit(Connection.MESSAGE_KEY, msg);
         }
     };
 
@@ -54,7 +55,7 @@ var Connection;
         messagePayload.createdT = Date.now();
         if (Connection.status) {
             messagePayload.sentT = messagePayload.createdT;
-            Connection.status.emit(MESSAGE_KEY, messagePayload);
+            Connection.socket.emit(Connection.MESSAGE_KEY, messagePayload);
         } else {
             Connection.outgoing.push(messagePayload);
         }

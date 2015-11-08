@@ -20,7 +20,7 @@ var StateMachine = function () {
     StateMachine.prototype = {
         transition: function (state) {
             var currentState = this.state;
-            triggerEvents(currentState, state);
+            this.triggerEvents(currentState, state);
             this.trigger("stateChanged", {
                 oldState: currentState,
                 newState: state
@@ -31,7 +31,10 @@ var StateMachine = function () {
             this.on(fromState + "/" + toState, handler);
         },
         triggerEvents: function (fromState, toState) {
-            this.trigger(fromState + "/" + toState);
+            this.trigger(fromState + "/" + toState, {
+                oldState: fromState,
+                newState: toState
+            });
         }
     };
 

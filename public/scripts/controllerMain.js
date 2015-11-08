@@ -6,9 +6,9 @@
 
         var controller = new Controller();
 
-        Connection.on("authenticated", function () {
+        Connection.on("authenticated", function (data) {
             // Init controller
-            controller.init();
+            controller.init(data);
 
             // if the page HTML does not derive and update from the controller state, update it manually
             initPage();

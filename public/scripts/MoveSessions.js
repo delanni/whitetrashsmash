@@ -21,6 +21,7 @@ function AttackSession(options) {
             }, this.timeout);
         },
         addAttack: function (attackGesture) {
+            if (!this.acceptsMoves) return;
             this.attackList.push(attackGesture);
             this.attacksRemaining -= 1;
             if (this.attacksRemaining == 0) {
@@ -35,8 +36,8 @@ function AttackSession(options) {
     };
 })(AttackSession);
 
-function DefenseSession(options) {
-    __merge(this, DefenseSession.defaults, options);
+function DefendSession(options) {
+    __merge(this, DefendSession.defaults, options);
 }
 
 (function (DefenseSession) {
@@ -76,4 +77,4 @@ function DefenseSession(options) {
             this.onFinish(this.attackList);
         }
     };
-})(DefenseSession);
+})(DefendSession);
