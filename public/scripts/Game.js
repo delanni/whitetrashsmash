@@ -22,9 +22,6 @@ var Game = function (options) {
             this.messageHub = new MessageHub();
             this.stateMachine = new StateMachine();
 
-            this.messageHub.on("playerJoin", function (data) {
-
-            });
 
             Connection.on("playerJoin", function (data) {
                 this.messageHub.postMessage("messageBar", {
@@ -51,7 +48,7 @@ var Game = function (options) {
                 this.messageHub.postMessage("messageBar", {
                     text: data.name + " left"
                 });
-                
+
                 if (data.isViewer) return;
 
                 if (this.p1.id == data.id) {
@@ -75,6 +72,8 @@ var Game = function (options) {
             var attacker = p1.id == payload.id ? p1 : p2;
             var defender = p1.id != payload.id ? p1 : p2;
 
+            attacker._anim._parent.filters = undefined;
+            this.messageHub.postMessage("messageBar", attacker.name + "'s turn");
         },
         playerDefend: function (payload) {
             var p1 = this.p1;
@@ -82,6 +81,10 @@ var Game = function (options) {
             var attacker = p1.id == payload.id ? p1 : p2;
             var defender = p1.id != payload.id ? p1 : p2;
 
+            defender._anim._parent.filters = undefined;
+            this.messageHub.postMessage("messageBar", payload.attackList.map(function (atk) {
+                return "<span class='gest-" + atk.gestureArea + "'>" + atk.gestureType + "</span>"
+            }).join(""));
         },
         playerWait: function (payload) {
             var p1 = this.p1;
@@ -102,11 +105,16 @@ var Game = function (options) {
                 defender.playAnim("block");
                 this.messageHub.postMessage("block");
             } else {
+                defender.health--;
+                defender.playAnim("idle");
                 this.messageHub.postMessage("hit");
                 this.messageHub.postMessage("healthLost", {
                     defender: defender
                 });
             }
+        },
+        gameOver: function () {
+
         }
     };
 

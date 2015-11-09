@@ -58,6 +58,7 @@ function DefendSession(options) {
             this.defend = this.defend || [];
             this.attackList = [];
             this.attacksRemaining = this.defend.length;
+            if (!this.attacksRemaining) this.timeout = 0;
             var defendSession = this;
             setTimeout(function () {
                 defendSession.finish();

@@ -8,7 +8,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/lib/hammer.min.js"></script>
     <script src="/lib/phaser.min.js"></script>
-    
+
     <script src="/scripts/Utils.js"></script>
     <script src="/scripts/EventEmitter.js"></script>
     <script src="/scripts/Connection.js"></script>
@@ -26,9 +26,13 @@
 </head>
 
 <body>
-    <div id="gameContainer">
+    <div id="viewWrapper">
+        <div id="gameContainer">
+        </div>
+        <div id="statusbar">
+            <div id="messageBar"></div>
+        </div>
     </div>
-    <div id="comboBar"></div>
 </body>
 
 </html>

@@ -139,8 +139,8 @@ Room.prototype._decodeNextStatus = function (payload) {
 };
 
 Room.prototype._onControllerReady = function () {
-    var p1 = this.controllersList[0];
-    var p2 = this.controllersList[1];
+    var p1 = this.controllersList.filter(function(e){return !e.isViewer})[0];
+    var p2 = this.controllersList.filter(function(e){return !e.isViewer})[1];
     var self = this;
 
     self.player1 = p1;

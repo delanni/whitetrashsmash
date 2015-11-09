@@ -10,8 +10,8 @@
             // Init view
             var phz = createPhaserGame(function (phz) {
                 game.init(phz);
+                var viewPageModel = new ViewPageModel(game.messageHub);
             });
-            var viewPageModel = new ViewPageModel(game.messageHub);
         });
     };
 })();

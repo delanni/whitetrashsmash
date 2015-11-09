@@ -55,9 +55,14 @@ var createPhaserGame = function (callback) {
                 ["idle", "attack", "block"].forEach(function (animName) {
                         var spr = ptr.getSprite(health, animName);
                         spr.smoothed = false;
-                        spr.scale.set(5,5);
+                        spr.scale.set(5, 5);
                         spr.anchor.setTo(.5, .5);
-                        spr.animations.add(animName, range(animName == "idle" ? 5 : 3));
+                        var frames = ({
+                            idle: [0,1,2,3,4],
+                            attack:[0,1,2,0,1,2],
+                            block:[0,1,2]
+                        })[animName];
+                        spr.animations.add(animName, frames);
                     });
                 });
 
@@ -89,9 +94,16 @@ var createPhaserGame = function (callback) {
             },
 
             getAnim: function (health, animName) {
+                var _this = this;
                 var s = this.getSprite(health, animName);
                 var props = this.animProps[animName + "_" + (4 - health)];
-                return s.animations.play(animName, props[0], props[1]);
+                var anim = s.animations.play(animName, props[0], props[1]);
+                if (!props[1]) {
+                    anim.onComplete.addOnce(function () {
+                        _this.playAnim("idle");
+                    });
+                }
+                return anim;
             },
 
             playAnim: function (name) {
@@ -99,9 +111,7 @@ var createPhaserGame = function (callback) {
                     this._anim.stop();
                     this._anim._parent.visible = false;
                 }
-                //            this.allSprite(function(e){
-                //               e.animations.stop();
-                //            });
+
                 this._anim = this.getAnim(this.health, name);
                 this._anim._parent.visible = true;
             }
@@ -123,12 +133,12 @@ var createPhaserGame = function (callback) {
             idle_1: [15, true],
             idle_2: [13, true],
             idle_3: [11, true],
-            attack_1: [18, false],
-            attack_2: [14, false],
-            attack_3: [12, false],
-            block_1: [12, false],
-            block_2: [12, false],
-            block_3: [12, false]
+            attack_1: [9, false],
+            attack_2: [9, false],
+            attack_3: [9, false],
+            block_1: [6, false],
+            block_2: [6, false],
+            block_3: [6, false]
         }
 
         var greg = phaserGame.greg = Object.create(blokeProto);
@@ -147,25 +157,13 @@ var createPhaserGame = function (callback) {
             idle_1: [16, true],
             idle_2: [14, true],
             idle_3: [12, true],
-            attack_1: [18, false],
-            attack_2: [18, false],
-            attack_3: [18, false],
-            block_1: [12, false],
-            block_2: [12, false],
-            block_3: [12, false]
+            attack_1: [9, false],
+            attack_2: [9, false],
+            attack_3: [9, false],
+            block_1: [6, false],
+            block_2: [6, false],
+            block_3: [6, false]
         };
-
-        function range(min, max) {
-            if (typeof max == 'undefined') {
-                max = min;
-                min = 0;
-            }
-            var t = [];
-            for (var i = min; i < max; i++) {
-                t.push(i);
-            }
-            return t;
-        }
 
         function startGame() {
 
@@ -176,8 +174,8 @@ var createPhaserGame = function (callback) {
             peter.init();
             greg.init();
 
-            p1.setPosition(350,360);
-            p2.setPosition(470,350);
+            p1.setPosition(350, 360);
+            p2.setPosition(470, 350);
 
             p2.flip();
 
