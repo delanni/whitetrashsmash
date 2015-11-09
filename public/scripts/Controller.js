@@ -37,7 +37,6 @@ var Controller = function(options) {
                 var ctrl = this;
                 setTimeout(function(){ ctrl.updateReadyState() },2000);
             },this);
-
         },
         
         updateReadyState: function(){

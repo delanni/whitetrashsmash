@@ -64,6 +64,10 @@ var Game = function (options) {
 
             attachHandlers.call(this);
             defineEdges.call(this);
+
+            var msgHub = this.messageHub;
+
+            msgHub.postMessage("messageBar", "Room code:<br/><strong>" + window.location.pathname.split("/").pop() + "</strong>");
         },
 
         playerAttack: function (payload) {

@@ -32,17 +32,20 @@ body {
 .gest-top{
     border-radius: 3px;
     margin: 4px;
+    padding: 4px;
     background: #1700CC;
 }
 
 .gest-mid{
     border-radius: 3px;
     margin: 4px;
+    padding: 4px;
     background: #FF6600;
 }
 
 .gest-bot{
     border-radius: 3px;
     margin: 4px;
+    padding: 4px;
     background: #17FF01;
 }
